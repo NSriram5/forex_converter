@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block title %}Boggle{{q_num}}{% endblock %} {% block content %}
+
+<div id="main">
+    <div id="heading">
+        <h1>
+            Boggle Board Game
+        </h1>
+    </div>
+
+    {% for msg in get_flashed_messages() %}
+    <p style="color:red">{{msg}}</p>
+    {% endfor %}
+    <br> {% if game_time %}
+    <div>
+        <form method="POST" action="/generate_board">
+            <button type="submit">Reshuffle Board</button>
+        </form>
+    </div>
+    <div id="timer">
+        <div id="time">
+            1:00
+        </div>
+        <div id="startstop">
+            <button id="startstopbtn">
+                Start/Stop
+            </button>
+        </div>
+    </div>
+    <div id="gameBoard">
+        {% for game_row in board_game %}
+        <div class="gameRow">
+            {% for cell in game_row %}
+            <div class="cell">
+                {{cell}}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <form>
+        <input type="text" name="word_enter" id="word_enter">
+        <button type="submit" id="checkBtn">Check Word</button>
+    </form>
+    <div id="wordResult">
+    </div>
+
+    <div id="scoreboard">
+        <span><strong>Score: </strong></span>
+        <span id="score">0</span>
+    </div>
+    <span>Words Found Already</span>
+    <div id="wordsFound">
+    </div>
+    <div id="stats">
+        <span><strong>Highscore: </strong></span>
+        <span id="highscore">{{highscore}}</span><br>
+        <span><strong>Number of times played: </strong></span>
+        <span id="playcount">{{count}}</span>
+    </div>
+    {% endif %} {% if non_game_time %}
+    <form method="POST" action="/generate_board">
+        <button type="submit">Generate board</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
