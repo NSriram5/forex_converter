@@ -1,15 +1,11 @@
 from flask import Flask, render_template, request, redirect, flash, session, make_response, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-
-from forex_python.converter import CurrencyRates, CurrencyCodes
-
-currency_symbols = CurrencyCodes()
-currency_rates = CurrencyRates()
+import conversion
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 app.config['SECRET_KEY'] = '12345'
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 
 @app.route('/')
@@ -18,7 +14,17 @@ def main():
 
 @app.route('/results')
 def result():
-    return render_template('home.html')
+    cur_from = request.args.get('from',None)
+    cur_to = request.args.get('to',None)
+    amount = request.args.get('amount',None)
+    result = conversion.convert(cur_from,cur_to,amount)
+    if isinstance(result,list):
+        for err in result:
+            flash(err)
+        return redirect('/')
+    return render_template('results.html',results = result)
+
+
 
 # @app.route('/')
 # def main_display():
