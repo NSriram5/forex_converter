@@ -4,6 +4,11 @@ currency_symbols = CurrencyCodes()
 currency_rates = CurrencyRates()
 
 def convert(cur_from,cur_to,amount):
+    '''
+    Converts a currency from one unit to another or retuns a list of errors in string format
+    >>> convert('USD','USD',5)
+    '5.00 $'
+    '''
     errors = []
     try:
         rates_dict = currency_rates.get_rates(cur_from)
@@ -19,7 +24,7 @@ def convert(cur_from,cur_to,amount):
     if len(errors)>0:
         return errors
     try:
-        result = amount * rates_dict[cur_to]
+        result = round(amount * rates_dict[cur_to],2)
     except:
         return ['Currency conversion failed']
     return f'{result} {end_unit}'
