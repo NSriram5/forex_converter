@@ -14,10 +14,11 @@ debug = DebugToolbarExtension(app)
 
 @app.route('/')
 def main():
+    return render_template('home.html')
 
 @app.route('/results')
 def result():
-    
+    return render_template('home.html')
 
 # @app.route('/')
 # def main_display():

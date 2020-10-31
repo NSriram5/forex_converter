@@ -1,1 +1,42 @@
-{% extends 'base.html' %} {% block title %}Input{{q_num}}{% endblock %} {% block content %} success {% endblock %}
+{% extends 'base.html' %} {% block title %}Input{{q_num}}{% endblock %} 
+{% block content %} 
+<div class="h2 m-3">
+    Currency Conversion Input
+</div>
+<div class = "d-flex w-75 flex-row justify-content-center">
+    <div class="container d-flex flex-column w-50" id="left">
+        <div>
+            <form action="/results" method="get">
+                <div class = "my-1 d-flex justify-content-beteen">
+                    <div class = "w-50">Converting from:</div>
+                    <div><input type="text" class = "w-50" name="from" id="from">
+                    </div>
+                </div>
+                <div class = "my-1 d-flex justify-content-beteen">
+                    <div class = "w-50">Converting to:</div> 
+                    <div><input type="text" class = "w-50" name="to" id="to">
+                    </div>
+                </div>
+                <div class = "my-1 d-flex justify-content-beteen">
+                    <div class = "w-50">Amount:</div>
+                    <div><input type="text" class = "w-50" name="amount" id="amount">
+                    </div>
+                </div>
+                <div cla
+                ss = "my-1 d-flex justify-content-beteen">
+                    <button class = "btn btn-primary">
+                        Convert
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class = "d-flex flex-column w-50" id="right">
+        <div>
+            {% for msg in get_flashed_messages() %}
+            <div class="alert alert-danger">{{msg}}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
